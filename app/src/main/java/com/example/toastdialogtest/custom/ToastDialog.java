@@ -42,6 +42,7 @@ public class ToastDialog extends Dialog{
         private String message;
         private View contentView;
         private int dialogPosition;
+        private int themeResId;
         public Builder(Context context){
             this.mContext=context;
         }
@@ -51,6 +52,10 @@ public class ToastDialog extends Dialog{
         }
         public Builder setContentView(View contentView){
             this.contentView=contentView;
+            return this;
+        }
+        public Builder setThemeResId(int themeResId){
+            this.themeResId=themeResId;
             return this;
         }
 
@@ -66,12 +71,16 @@ public class ToastDialog extends Dialog{
         public ToastDialog build(){
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             // instantiate the dialog with the custom Theme
+            if (themeResId!=0){
+                final ToastDialog dialog = new ToastDialog(mContext,0);
+            }
             final ToastDialog dialog = new ToastDialog(mContext);
             Window window = dialog.getWindow();
             WindowManager.LayoutParams lp = window.getAttributes();
             if (dialogPosition!=-1){
                 window.setGravity(dialogPosition);
             }
+
 
             View layout = inflater.inflate(R.layout.ite_dialog_custome, null);
             dialog.addContentView(layout, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
